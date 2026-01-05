@@ -30,6 +30,7 @@ public class PersonaService {
         System.out.println("Persona agregada correctamente");
     }
 
+    // Listar personas
     public void listarPersonas(){
         if (personas.isEmpty()){
             System.out.println("No hay personas cargadas");
