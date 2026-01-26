@@ -1,6 +1,5 @@
 package com.gestion;
 
-import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public class Main {
@@ -22,7 +21,9 @@ public class Main {
             System.out.println("\n *** SISTEMA DE GESTIÓN *** \n");
             System.out.println("1. Agregar persona");
             System.out.println("2. Listar personas");
-            System.out.println("3. Salir");
+            System.out.println("3. Editar persona");
+            System.out.println("4. Eliminar persona");
+            System.out.println("5. Salir");
             System.out.println("Opcion: ");
 
             int opcion = scanner.nextInt();
@@ -48,6 +49,28 @@ public class Main {
                     break;
 
                 case 3:
+                    System.out.println("Id a editar: ");
+                    int idEditar = scanner.nextInt();
+                    scanner.nextLine();
+
+                    System.out.println("Nuevo nombre: ");
+                    String nuevoNombre = scanner.nextLine();
+
+                    System.out.println("Nueva edad: ");
+                    int nuevaEdad = scanner.nextInt();
+
+                    servicio.editarPersona(idEditar,nuevoNombre,nuevaEdad);
+                    break;
+
+                case 4:
+                    System.out.println("Id a eliminar: ");
+                    int idEliminar = scanner.nextInt();
+                    scanner.nextLine();
+
+                    servicio.eliminarPersona(idEliminar);
+                    break;
+
+                case 5:
                     salir = true;
                     System.out.println("Saliendo del sistema...");
                     break;
