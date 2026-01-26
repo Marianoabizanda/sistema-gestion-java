@@ -8,7 +8,7 @@ import java.io.File;
 
 public class PersonaReposity {
 
-    private static final String ARCHIVO = "personas.scv"; //Aca creo el archivo en la carpeta, si no existe se crea al guardarlo.
+    private static final String ARCHIVO = "personas.csv"; //Aca creo el archivo en la carpeta, si no existe se crea al guardarlo.
 
     public ArrayList<Persona> cargar(){
         ArrayList<Persona> personas = new ArrayList<>();
