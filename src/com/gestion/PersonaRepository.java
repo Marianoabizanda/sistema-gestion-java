@@ -6,7 +6,7 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.io.File;
 
-public class PersonaReposity {
+public class PersonaRepository {
 
     private static final String ARCHIVO = "personas.csv"; //Aca creo el archivo en la carpeta, si no existe se crea al guardarlo.
 

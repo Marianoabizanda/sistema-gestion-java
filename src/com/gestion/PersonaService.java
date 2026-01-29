@@ -5,12 +5,12 @@ import java.util.ArrayList;
 public class PersonaService {
 
     private ArrayList<Persona> personas;
-    private PersonaReposity repo;
+    private PersonaRepository repo;
 
     public PersonaService(){
       //  personas = new ArrayList<>();
-        repo = new PersonaReposity();
-        personas = repo.cargar(); // Carga al iniciar.
+        repo = new PersonaRepository(); // Creo el encargado de archivos, desde la clase PersonaRepository creo el objeto repo.
+        personas = repo.cargar(); // Carga al iniciar. // Cargo personas desde personas.csv
     }
 
     //Agregar personas
@@ -22,7 +22,6 @@ public class PersonaService {
             System.out.println("X Edad inválida.");
             return;
         }
-
 
         Persona persona = new Persona(id, nombre, edad);
         personas.add(persona);
@@ -45,6 +44,7 @@ public class PersonaService {
 
     }
 
+    //Este metodo lo uso internamente en los métodos editarPersona() y eliminarPersona().
     public Persona buscarPorId(int id){
         for(Persona p : personas){
             if(p.getId() == id){
@@ -53,6 +53,18 @@ public class PersonaService {
 
         }
         return null;
+    }
+
+    // Este método lo uso en el menú de opciones para buscar por id.
+    public void mostrarPersonaPorId(int id){
+        Persona p = buscarPorId(id);
+
+        if (p == null){
+            System.out.println("X No existe una persona con ese ID.");
+            return;
+        }
+        System.out.println("\n---PERSONA ENCONTRADA---");
+        p.mostrarDatos();
     }
 
     public void editarPersona(int id, String nuevoNombre, int nuevaEdad){
