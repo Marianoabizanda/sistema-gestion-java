@@ -1,4 +1,6 @@
-package com.gestion;
+package com.gestion.ui;
+
+import com.gestion.service.PersonaService;
 
 import java.util.Scanner;
 
@@ -34,14 +36,12 @@ public class Main {
         }
     }
 
+    public static void pausa(Scanner scanner){
+        System.out.println("\nPresione ENTER para continuar... ");
+        scanner.nextLine();
+    }
+
     public static void main(String[] args) {
-
-        /*Persona p1 = new Persona(1, "Juan", 20);
-        Persona p2 = new Persona(2, "Ana", 23);
-
-        p1.mostrarDatos();
-        System.out.println("-------------------------");
-        p2.mostrarDatos();*/
 
         Scanner scanner = new Scanner(System.in);
         PersonaService servicio = new PersonaService();
@@ -77,42 +77,55 @@ public class Main {
                     //int edad = scanner.nextInt();
                     int edad = leerEntero(scanner, "Edad: ");
 
-                    servicio.agregarPersona(id, nombre, edad);
+                    String msg = servicio.agregarPersona(id, nombre, edad);
+                    System.out.println(msg);
+
+                    pausa(scanner);
                     break;
 
                 case 2:
                     servicio.listarPersonas();
+                    pausa(scanner);
                     break;
 
                 case 3:
                     int idBuscar = leerEntero(scanner, "Id a buscar: ");
                     servicio.mostrarPersonaPorId(idBuscar);
+                    pausa(scanner);
                     break;
 
                 case 4:
-                    System.out.println("Id a editar: ");
+                    //System.out.println("Id a editar: ");
                     //int idEditar = scanner.nextInt();
                     int idEditar = leerEntero(scanner, "ID a editar: ");
-                    scanner.nextLine();
+                    //scanner.nextLine();
 
-                    System.out.println("Nuevo nombre: ");
+                    //System.out.println("Nuevo nombre: ");
                     //String nuevoNombre = scanner.nextLine();
                     String nuevoNombre = leerTexto(scanner, "Nuevo nombre: ");
 
-                    System.out.println("Nueva edad: ");
+                    //System.out.println("Nueva edad: ");
                     //int nuevaEdad = scanner.nextInt();
                     int nuevaEdad = leerEntero(scanner, "Nueva edad: ");
 
                     servicio.editarPersona(idEditar,nuevoNombre,nuevaEdad);
+                    pausa(scanner);
                     break;
 
                 case 5:
-                    System.out.println("Id a eliminar: ");
+                    //System.out.println("Id a eliminar: ");
                     //int idEliminar = scanner.nextInt();
                     int idEliminar = leerEntero(scanner, "Id a eliminar: ");
-                    scanner.nextLine();
+                    //scanner.nextLine();
 
-                    servicio.eliminarPersona(idEliminar);
+                    // Agrego confirmación.
+                    String confirm = leerTexto(scanner, "Seguro que quiere eliminar? (S/N): ");
+                    if(confirm.equalsIgnoreCase("S")){
+                        servicio.eliminarPersona(idEliminar);
+                    }else {
+                        System.out.println("Operación cancelada");
+                    }
+                    pausa(scanner);
                     break;
 
                 case 6:

@@ -1,4 +1,7 @@
-package com.gestion;
+package com.gestion.service;
+
+import com.gestion.repository.PersonaRepository;
+import com.gestion.model.Persona;
 
 import java.util.ArrayList;
 
@@ -8,25 +11,22 @@ public class PersonaService {
     private PersonaRepository repo;
 
     public PersonaService(){
-      //  personas = new ArrayList<>();
+      //  personas = new ArrayList<>(); ya no se utiliza porque el array se crea en PersonaRepository.java en el metodo cargar.
         repo = new PersonaRepository(); // Creo el encargado de archivos, desde la clase PersonaRepository creo el objeto repo.
         personas = repo.cargar(); // Carga al iniciar. // Cargo personas desde personas.csv
     }
 
     //Agregar personas
-    public void agregarPersona(int id, String nombre, int edad){
-        if (buscarPorId(id)!= null){
-            System.out.println("X Ya existe una persona con ese ID.");
-            return;
-        }if(edad < 0){
-            System.out.println("X Edad inválida.");
-            return;
-        }
+    public String agregarPersona(int id, String nombre, int edad){
+        if(buscarPorId(id) != null) return "X ya existe una persona con ese nombre";
+        if(edad < 0) return "X Edad inválida";
+        if(nombre == null || nombre.trim().isEmpty()) return "X Nombre inválido";
 
         Persona persona = new Persona(id, nombre, edad);
         personas.add(persona);
         repo.guardar(personas); // Guarda despues de agregar.
-        System.out.println("Persona agregada correctamente");
+
+        return "Persona agregada correctamente";
     }
 
     // Listar personas
@@ -39,12 +39,13 @@ public class PersonaService {
         System.out.println("\n - LISTADO DE PERSONAS - \n");
         for (Persona p : personas){
             p.mostrarDatos();
-            System.out.println("----------------");
+            System.out.println("ID | Nombre | Edad");
+            System.out.println("-------------------");
         }
 
     }
 
-    //Este metodo lo uso internamente en los métodos editarPersona() y eliminarPersona().
+    //Este metodo lo uso internamente en los métodos agregarPersona(), editarPersona() y eliminarPersona().
     public Persona buscarPorId(int id){
         for(Persona p : personas){
             if(p.getId() == id){

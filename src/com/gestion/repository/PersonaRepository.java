@@ -1,4 +1,6 @@
-package com.gestion;
+package com.gestion.repository;
+
+import com.gestion.model.Persona;
 
 import java.io.*;
 import java.io.BufferedReader;
@@ -37,6 +39,9 @@ public class PersonaRepository {
         return personas;
 
         }
+
+
+
     public void guardar(ArrayList<Persona> personas){
         try(BufferedWriter bw = new BufferedWriter(new FileWriter(ARCHIVO))){
             for(Persona p : personas){

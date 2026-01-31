@@ -1,4 +1,4 @@
-package com.gestion;
+package com.gestion.model;
 
 public class Persona {
 
@@ -36,9 +36,7 @@ public class Persona {
         }
 
         public void mostrarDatos(){
-            System.out.println("ID: " + id);
-            System.out.println("Nombre: " + nombre);
-            System.out.println("Edad: " + edad);
+            System.out.println("ID: " + id + " | Nombre: " + nombre + " | Edad: " + edad);
 
         }
 }
