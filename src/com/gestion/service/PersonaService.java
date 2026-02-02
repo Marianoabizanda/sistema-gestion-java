@@ -18,11 +18,11 @@ public class PersonaService {
 
     //Agregar personas
     public String agregarPersona(int id, String nombre, int edad){
-        if(buscarPorId(id) != null) return "X ya existe una persona con ese nombre";
+        if(buscarPorId(id) != null) return "X ya existe una persona con ese ID";
         if(edad < 0) return "X Edad inválida";
         if(nombre == null || nombre.trim().isEmpty()) return "X Nombre inválido";
 
-        Persona persona = new Persona(id, nombre, edad);
+        Persona persona = new Persona(id, nombre.trim(), edad);
         personas.add(persona);
         repo.guardar(personas); // Guarda despues de agregar.
 
@@ -30,19 +30,23 @@ public class PersonaService {
     }
 
     // Listar personas
-    public void listarPersonas(){
+    public String listarPersonas(){
         if (personas.isEmpty()){
-            System.out.println("No hay personas cargadas");
-            return;
+            return "No hay personas cargadas";
         }
 
-        System.out.println("\n - LISTADO DE PERSONAS - \n");
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("\n - LISTADO DE PERSONAS - \n\n");
+        sb.append("ID | Nombre | Edad");
+        sb.append("\n-------------------\n");
+
         for (Persona p : personas){
-            p.mostrarDatos();
-            System.out.println("ID | Nombre | Edad");
-            System.out.println("-------------------");
+            sb.append(p.getId()).append(" | ")
+            .append(p.getNombre()).append(" | ")
+            .append(p.getEdad()).append("\n");
         }
-
+        return sb.toString();
     }
 
     //Este metodo lo uso internamente en los métodos agregarPersona(), editarPersona() y eliminarPersona().
@@ -56,49 +60,96 @@ public class PersonaService {
         return null;
     }
 
+
+
     // Este método lo uso en el menú de opciones para buscar por id.
-    public void mostrarPersonaPorId(int id){
+    public String mostrarPersonaPorId(int id){
         Persona p = buscarPorId(id);
 
-        if (p == null){
-            System.out.println("X No existe una persona con ese ID.");
-            return;
-        }
-        System.out.println("\n---PERSONA ENCONTRADA---");
-        p.mostrarDatos();
+        if (p == null) return "X No existe una persona con ese ID.";
+            //System.out.println("X No existe una persona con ese ID.");
+
+
+        return "\nPersona encontrada:\n" + p.getId() + " | " + p.getNombre() + " | " + p.getEdad();
+        //System.out.println("\n---PERSONA ENCONTRADA---");
     }
 
-    public void editarPersona(int id, String nuevoNombre, int nuevaEdad){
+
+
+    public String editarPersona(int id, String nuevoNombre, int nuevaEdad){
         Persona p = buscarPorId(id);
 
-        if(p == null){
-            System.out.println("X No existe una persona con ese ID");
-            return;
-        }
-        if(nuevaEdad < 0){
-            System.out.println("X Edad inválida.");
-            return;
-        }
+        if(p == null) return "X No existe una persona con ese ID";
+        if(nuevaEdad < 0) return "X Edad inválida.";
+        if(nuevoNombre == null || nuevoNombre.trim().isEmpty()) return "X Nombre inválido";
 
-        p.setNombre(nuevoNombre);
+
+
+        p.setNombre(nuevoNombre.trim());
         p.setEdad(nuevaEdad);
         repo.guardar(personas); // Guarda despues de editar.
-        System.out.println("Persona actualizada");
 
+        return "Persona actualizada";
     }
 
-    public void eliminarPersona(int id){
+
+
+    public String eliminarPersona(int id){
         Persona p = buscarPorId(id);
 
-        if(p == null){
-            System.out.println("X No existe una persona con ese ID");
-            return;
-        }
+        if(p == null) return "X No existe una persona con ese ID";
 
         personas.remove(p);
         repo.guardar(personas); // Guarda despues de eliminar.
-        System.out.println("Persona eliminada.");
+
+        return "Persona eliminada.";
+    }
+
+
+
+    public String listarOrdenadasPorNombre(){
+        if(personas.isEmpty()){
+            return "No hay personas cargadas";
+        }
+            StringBuilder sb = new StringBuilder();
+            sb.append("\n - LISTADO ORDENADO POR NOMBRE - \n\n");
+            sb.append("ID | Nombre | Edad\n");
+            sb.append("--------------------\n");
+
+            personas.stream()
+                    .sorted((p1,p2) -> p1.getNombre().compareToIgnoreCase(p2.getNombre()))
+                    .forEach(p ->
+                            sb.append(p.getId()).append(" | ")
+                                    .append(p.getNombre()).append(" | ")
+                                    .append(p.getEdad()).append("\n")
+                    );
+
+            return sb.toString();
+    }
+
+
+
+    public String listarOrdenadasPorEdad() {
+        if (personas.isEmpty()) {
+            return "No hay personas cargadas";
+        }
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("\n - LISTADO ORDENADO POR NOMBRE - \n\n");
+        sb.append("ID | Nombre | Edad\n");
+        sb.append("--------------------\n");
+
+        personas.stream()
+                .sorted((p1, p2) -> Integer.compare(p1.getEdad(), p2.getEdad()))
+                .forEach(p ->
+                        sb.append(p.getId()).append(" | ")
+                                .append(p.getNombre()).append(" | ")
+                                .append(p.getEdad()).append("\n")
+                );
+
+        return sb.toString();
 
     }
+
 
 }

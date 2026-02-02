@@ -52,10 +52,12 @@ public class Main {
             System.out.println("\n *** SISTEMA DE GESTIÓN *** \n");
             System.out.println("1. Agregar persona");
             System.out.println("2. Listar personas");
-            System.out.println("3. Buscar por Id");
-            System.out.println("4. Editar persona");
-            System.out.println("5. Eliminar persona");
-            System.out.println("6. Salir");
+            System.out.println("3. Listar personas (ordenadas por nombre)");
+            System.out.println("4. Listar personas (ordenadas por edad)");
+            System.out.println("5. Buscar por Id");
+            System.out.println("6. Editar persona");
+            System.out.println("7. Eliminar persona");
+            System.out.println("8. Salir");
             //System.out.println("Opcion: ");
 
             //int opcion = scanner.nextInt();
@@ -84,17 +86,31 @@ public class Main {
                     break;
 
                 case 2:
-                    servicio.listarPersonas();
+                    String msgListar = servicio.listarPersonas();
+                    System.out.println(msgListar);
                     pausa(scanner);
                     break;
 
                 case 3:
-                    int idBuscar = leerEntero(scanner, "Id a buscar: ");
-                    servicio.mostrarPersonaPorId(idBuscar);
+                    String msgNombre = servicio.listarOrdenadasPorNombre();
+                    System.out.println(msgNombre);
                     pausa(scanner);
                     break;
 
                 case 4:
+                    String msgEdad = servicio.listarOrdenadasPorEdad();
+                    System.out.println(msgEdad);
+                    pausa(scanner);
+                    break;
+
+                case 5:
+                    int idBuscar = leerEntero(scanner, "Id a buscar: ");
+                    String msgBuscar = servicio.mostrarPersonaPorId(idBuscar);
+                    System.out.println(msgBuscar);
+                    pausa(scanner);
+                    break;
+
+                case 6:
                     //System.out.println("Id a editar: ");
                     //int idEditar = scanner.nextInt();
                     int idEditar = leerEntero(scanner, "ID a editar: ");
@@ -108,11 +124,12 @@ public class Main {
                     //int nuevaEdad = scanner.nextInt();
                     int nuevaEdad = leerEntero(scanner, "Nueva edad: ");
 
-                    servicio.editarPersona(idEditar,nuevoNombre,nuevaEdad);
+                    String msgEditar = servicio.editarPersona(idEditar,nuevoNombre,nuevaEdad);
+                    System.out.println(msgEditar);
                     pausa(scanner);
                     break;
 
-                case 5:
+                case 7:
                     //System.out.println("Id a eliminar: ");
                     //int idEliminar = scanner.nextInt();
                     int idEliminar = leerEntero(scanner, "Id a eliminar: ");
@@ -121,14 +138,15 @@ public class Main {
                     // Agrego confirmación.
                     String confirm = leerTexto(scanner, "Seguro que quiere eliminar? (S/N): ");
                     if(confirm.equalsIgnoreCase("S")){
-                        servicio.eliminarPersona(idEliminar);
+                        String msgEliminar = servicio.eliminarPersona(idEliminar);
+                        System.out.println(msgEliminar);
                     }else {
                         System.out.println("Operación cancelada");
                     }
                     pausa(scanner);
                     break;
 
-                case 6:
+                case 8:
                     salir = true;
                     System.out.println("Saliendo del sistema...");
                     break;
