@@ -34,18 +34,20 @@ en escribir código claro, ordenado y funcional.
 ---
 
 ## Estructura del proyecto
+```text
 com.gestion
 ├── model
-│ └── Persona.java
+│   └── Persona.java
 ├── repository
-│ └── PersonaRepository.java
+│   └── PersonaRepository.java
 ├── service
-│ └── PersonaService.java
+│   └── PersonaService.java
 ├── ui
-│ └── Main.java
-└── util
-└── Resultado.java (opcional)
+    └── Main.java
 
+```
+
+La aplicación sigue una separación por capas (model, repository, service, ui) para mantener responsabilidades claras y facilitar futuras extensiones.
 
 ---
 
